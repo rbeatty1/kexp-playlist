@@ -1,6 +1,7 @@
-## Title: kexp_spotify.py
 ## Author: Robert Beatty
+#### Title: kexp-playlist
 
+_**disclaimer**: this project isn't affiliated with DVRPC except for the fact that I want to listen to my KEXP playlist at work_
 
 
 This is a fun little side project I've been thinking about for a while
