@@ -78,12 +78,15 @@ except Exception as e:
 
 ## TRY BLOCK 3: Spotify stuff
 scope = 'playlist-modify-private'
+client_id='a1cf45685b554834a0af87822b902476'
+client_secret= str(input('> Insert Client Secret code: '))
+redirect_uri='https://www.google.com/'
 try:
 	username = str(1246074730) ## get from spotify app. ID : 1246074730
-	token = util.prompt_for_user_token(username, scope)
+	token = util.prompt_for_user_token(username, scope, client_id, client_secret, redirect_uri)
 except:
 	os.remove(f".cache-{username}")
-	token = util.prompt_for_user_token(username, scope)
+	token = util.prompt_for_user_token(username, scope, client_id, client_secret, redirect_uri)
 sp = spotipy.Spotify(auth=token)
 playlist_id = '06YBjhkywYl6HEy7FMZaA9'
 success = []
