@@ -8,12 +8,8 @@ date: July 2, 2018
 from urllib import request as r
 from timeit import default_timer as t
 from bs4 import BeautifulSoup
-import spotipy
-import os
-import re
+import re, os, spotipy, urllib
 import spotipy.util as util
-t_s = t()
-print("start...\n")
 
 # it's a globalized world
 kv_latest = []
@@ -93,8 +89,9 @@ success = []
 failed = []
 cnt = 1
 for song in song_list:
-	# q = encode("{}artist:{}".format(song['name'],song['artist']))
-	result = sp.search(q=song['name'],limit=1,offset=0,type='track')
+	q = "track:{} artist:{}".format(song['name'],song['artist'])
+	encoded = urllib.parse.quote(q)
+	result = sp.search(q=q,limit=1,offset=0,type='track')
 	if len(result['tracks']['items']) != 0:
 		results_list = result['tracks']['items'][0]
 		if results_list['album']['artists'][0]['name'] != song['artist'] and results_list['name'] != song['name']:
@@ -102,14 +99,12 @@ for song in song_list:
 		else:
 			success.append(results_list['uri'])
 	else:
-		print('nope.')
-
+		failed.append(song['name'])
+#
 	cnt +=1
-	# del result	
+	del result
 sp.user_playlist_add_tracks(username, playlist_id, success)
-t_e = t()
+print("{} songs out of {} added for a {}% success rate for this week".format(len(success), (len(success)+len(failed)), round(((len(success)/(len(success)+len(failed)))*100),2)))
 print("end...")
-t_d = round((t_e - t_s),2)
-print("script ran for {}s".format(t_d))
 
 
